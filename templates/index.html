@@ -391,7 +391,7 @@ background-position: center !important;
 .fip-full-panel:hover .fip-full-bg { transform: scale(1); }
 .fip-full-overlay {
   position: absolute; inset: 0;
-  background: rgba(8,13,26,0.6);
+  background: rgba(35, 53, 97, 0.6);
 }
 .fip-full-content {
   position: relative; z-index: 2;
@@ -575,7 +575,7 @@ background-position: center !important;
       <div class="fip-fullscreen-forms">
         <!-- WET FIP -->
         <div class="fip-full-panel" id="panel-wet">
-          <div class="fip-full-bg" style="background-image: url('{{ url_for('static', filename='images/wetfip.avif') }}')"></div>
+          <div class="fip-full-bg"></div>
           <div class="fip-full-overlay"></div>
           <div class="fip-full-content">
             <div class="fip-full-number">01</div>
@@ -590,7 +590,7 @@ background-position: center !important;
 
         <!-- DRY FIP -->
         <div class="fip-full-panel" id="panel-dry">
-          <div class="fip-full-bg" style="background-image: url('{{ url_for('static', filename='images/dryfip.webp') }}'); filter: hue-rotate(200deg) saturate(0.6) brightness(0.5);"></div>
+          <div class="fip-full-bg"></div>
           <div class="fip-full-overlay" style="background: linear-gradient(135deg, rgba(59,130,246,0.7), rgba(168,85,247,0.7));"></div>
           <div class="fip-full-content">
             <div class="fip-full-number">02</div>
@@ -605,7 +605,7 @@ background-position: center !important;
 
         <!-- NEUROLOGICAL FIP -->
         <div class="fip-full-panel" id="panel-neuro">
-          <div class="fip-full-bg" style="background-image: url('{{ url_for('static', filename='images/neuro.jpg') }}')"></div>
+          <div class="fip-full-bg"></div>
           <div class="fip-full-overlay" style="background: rgba(80,0,30,0.75);"></div>
           <div class="fip-full-content">
             <div class="fip-full-number">03</div>
