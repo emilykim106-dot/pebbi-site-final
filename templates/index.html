@@ -259,11 +259,7 @@ footer span { color: #a855f7; }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-@media (max-width: 768px) {.fip-form-number {.fip-full-bg {
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-}
+@media (max-width: 768px) {.fip-form-number {
     font-size: 1.8rem !important;
 }
 
@@ -369,7 +365,11 @@ background-position: center !important;
 }
 .fip-full-bg {
   position: absolute; inset: 0;
+<<<<<<< HEAD
   background-size: contain; background-repeat: no-repeat; background-position: center;
+=======
+  background-size: contain; background-position: no-repeat; background-position: center;
+>>>>>>> parent of 5255269 (mobile scal)
   transform: scale(1.05);
   transition: transform 0.6s ease;
   filter: brightness(0.4);
