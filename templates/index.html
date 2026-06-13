@@ -259,7 +259,22 @@ footer span { color: #a855f7; }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) {.fip-form-number {
+    font-size: 1.8rem !important;
+}
+
+.fip-form-content h4 {
+    font-size: 2rem !important;
+}
+
+.fip-form-img {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.fip-form-img img {
+    object-fit: contain !important;
+}
   .fip-grid, .treatment-grid, .resources-twist, .photo-grid { grid-template-columns: 1fr; }
   .type-cards { grid-template-columns: 1fr; }
   .mindmap-wrapper { height: auto; display: flex; flex-direction: column; gap: 0.8rem; align-items: center; }
