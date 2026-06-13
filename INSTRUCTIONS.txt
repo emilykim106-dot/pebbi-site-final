@@ -1,0 +1,73 @@
+====================================
+ FIP AWARENESS WEBSITE — INSTRUCTIONS
+====================================
+
+YOUR FOLDER STRUCTURE:
+fip-website/
+├── app.py              ← the Python/Flask app
+├── requirements.txt    ← libraries needed
+├── Procfile            ← tells Railway how to run it
+├── INSTRUCTIONS.txt    ← this file
+├── templates/
+│   └── index.html      ← the website
+└── static/
+    └── images/
+        ├── pebbi1.jpeg
+        └── pebbi2.jpeg
+
+
+——————————————————————————————————————
+STEP 1 — TEST IT ON YOUR OWN COMPUTER
+——————————————————————————————————————
+
+1. Open Terminal
+2. Navigate to the folder:
+      cd fip-website
+
+3. Install Flask:
+      pip3 install flask
+
+4. Run the app:
+      python3 app.py
+
+5. Open your browser and go to:
+      http://localhost:5000
+
+You should see the website! Press Ctrl+C in Terminal to stop it.
+
+
+——————————————————————————————————————
+STEP 2 — PUT IT ONLINE (FREE) WITH RAILWAY
+——————————————————————————————————————
+
+1. Go to https://github.com and create a free account
+
+2. Create a new repository called "fip-awareness"
+   - Click the + button → New repository
+   - Name it fip-awareness
+   - Click "Create repository"
+
+3. Upload your files to GitHub:
+   - Click "uploading an existing file"
+   - Drag your entire fip-website folder contents in
+   - Click "Commit changes"
+
+4. Go to https://railway.app
+   - Sign up with your GitHub account (free)
+   - Click "New Project"
+   - Click "Deploy from GitHub repo"
+   - Select your fip-awareness repo
+   - Railway will automatically detect it's a Python app
+
+5. Once deployed, Railway gives you a live link like:
+      https://fip-awareness.up.railway.app
+
+6. Put that link in your Instagram bio! 🐾
+
+
+——————————————————————————————————————
+NEED HELP?
+——————————————————————————————————————
+Just ask Claude — paste any error messages and
+you'll get help right away.
+====================================

@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIP Awareness — In Memory of Pebbi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Nunito:wght@900&family=Fredoka:wght@700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: #080d1a;
+  color: #e8eaf6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* CAT SILHOUETTES */
+.cat-silhouette {
+  position: absolute; opacity: 0.06; pointer-events: none;
+}
+.cat-silhouette svg { fill: #fff; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(8,13,26,0.92);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  height: 52px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem;
+}
+.nav-logo { font-size: 0.92rem; font-weight: 600; background: linear-gradient(135deg, #f0abfc, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.01em; }
+nav ul { list-style: none; display: flex; gap: 2rem; }
+nav ul a { text-decoration: none; color: rgba(255,255,255,0.45); font-size: 0.8rem; font-weight: 400; transition: color 0.2s; }
+nav ul a:hover { color: #fff; }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 80px 2rem 2rem; position: relative; overflow: hidden;
+  background: #080d1a;
+}
+.hero-eyebrow {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: #a855f7; margin-bottom: 1.2rem;
+  opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards;
+}
+.hero h1 {
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-family: 'Fredoka', cursive;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s ease forwards;
+}
+.hero h1 span { color: #a855f7; }
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.15rem); font-weight: 300;
+  color: rgba(255,255,255,0.5); max-width: 540px; line-height: 1.7;
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.8s 0.6s ease forwards;
+}
+.hero-cta {
+  display: inline-block; padding: 0.85rem 2rem; background: linear-gradient(135deg, #a855f7, #3b82f6);
+  color: white; text-decoration: none; font-size: 0.88rem; font-weight: 500;
+  border-radius: 980px; transition: background 0.2s, transform 0.2s;
+  opacity: 0; animation: fadeUp 0.8s 0.8s ease forwards;
+}
+.hero-cta:hover { opacity: 0.9; transform: scale(1.02); }
+.hero-image {
+  width: min(680px, 90vw); margin-top: 4rem; border-radius: 28px; overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.12);
+  opacity: 0; animation: fadeUp 1s 1s ease forwards;
+}
+.hero-image img { width: 100%; display: block; }
+
+/* SCROLL REVEAL */
+.reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* DIVIDER */
+.divider { height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent); }
+
+/* SECTIONS */
+.section { padding: 110px 2rem; max-width: 980px; margin: 0 auto; }
+.section-full { padding: 110px 2rem; }
+.section-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #a855f7; margin-bottom: 1rem; }
+h2 { font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 1.5rem; background: linear-gradient(135deg, #1a1a1a 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h3 { font-size: 1.15rem; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 0.5rem; margin-top: 2rem; }
+p { color: rgba(255,255,255,0.5); font-size: 0.97rem; line-height: 1.75; margin-bottom: 1.1rem; max-width: 680px; }
+strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+
+/* FIP SECTION */
+.fip-section { background: #080d1a; position: relative; overflow: hidden; }
+.fip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.type-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+.type-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 1.4rem; transition: border-color 0.2s;
+}
+.type-card:hover { border-color: #a855f7; }
+.type-card h4 { font-size: 0.95rem; font-weight: 600; color: #a855f7; margin-bottom: 0.4rem; }
+.type-card p { font-size: 0.85rem; margin: 0; color: rgba(255,255,255,0.45); }
+.risk-cards { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
+.risk-card {
+  display: flex; flex-direction: column; gap: 0.15rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 0.9rem 1.1rem;
+  transition: border-color 0.2s;
+}
+.risk-card:hover { border-color: rgba(168,85,247,0.4); }
+.risk-label { font-size: 0.82rem; font-weight: 600; color: #c084fc; letter-spacing: 0.04em; }
+.risk-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+.fip-forms { display: flex; flex-direction: column; gap: 0; }
+.fip-form-item { display: flex; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); align-items: center; }
+.fip-form-item:last-child { border-bottom: none; }
+.fip-form-number { font-size: 2.5rem; font-weight: 700; color: rgba(255,255,255,0.1); line-height: 1; min-width: 50px; letter-spacing: -0.03em; flex-shrink: 0; }
+.fip-form-danger .fip-form-number { color: #e9d5ff; }
+.fip-form-content { flex: 1; }
+.fip-form-content h4 { font-size: 1rem; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 0.4rem; }
+.fip-form-danger .fip-form-content h4 { color: #a855f7; }
+.fip-form-content p { font-size: 0.88rem; margin-bottom: 0.5rem; color: rgba(255,255,255,0.45); max-width: none; }
+.fip-form-tag { font-size: 0.75rem; color: rgba(255,255,255,0.25); letter-spacing: 0.04em; }
+.fip-form-img { width: 180px; height: 130px; border-radius: 14px; overflow: hidden; flex-shrink: 0; }
+.fip-form-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fip-form-img.tinted { position: relative; }
+.fip-form-img.tinted img { filter: hue-rotate(200deg) saturate(0.7) brightness(0.9); }
+.fip-form-img.tinted::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(168,85,247,0.35), rgba(59,130,246,0.35)); border-radius: 14px; }
+.risk-list li { padding: 0.8rem 0; border-bottom: 1px solid #f0f0f0; color: rgba(255,255,255,0.55); font-size: 0.93rem; }
+.risk-list li:last-child { border-bottom: none; }
+
+/* MIND MAP SYMPTOMS */
+.symptoms-section { background: #080d1a; position: relative; overflow: hidden; }
+.mindmap-wrapper {
+  position: relative; width: 100%; max-width: 900px;
+  margin: 4rem auto 0; height: 580px;
+}
+.mindmap-center {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #a855f7, #3b82f6); color: white;
+  width: 130px; height: 130px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; font-weight: 600; text-align: center;
+  z-index: 2; line-height: 1.3;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+.mindmap-node {
+  position: absolute; background: white;
+  border: 1.5px solid #e8e8e8; border-radius: 14px;
+  padding: 0.9rem 1.1rem; width: 155px;
+  font-size: 0.8rem; color: rgba(255,255,255,0.7);
+  z-index: 2; transition: border-color 0.2s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+.mindmap-node:hover { border-color: #a855f7; transform: scale(1.04); }
+.mindmap-node strong { display: block; font-size: 0.85rem; color: #fff; margin-bottom: 0.25rem; font-weight: 600; }
+.mindmap-node svg { width: 18px; height: 18px; margin-bottom: 0.4rem; display: block; stroke: #a855f7; }
+/* node positions around center */
+.node-1 { top: 2%; left: 38%; }
+.node-2 { top: 8%; left: 65%; }
+.node-3 { top: 35%; left: 78%; }
+.node-4 { top: 65%; left: 72%; }
+.node-5 { top: 80%; left: 48%; }
+.node-6 { top: 65%; left: 18%; }
+.node-7 { top: 35%; left: 5%; }
+.node-8 { top: 8%; left: 18%; }
+/* SVG connector lines */
+.mindmap-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* TREATMENT */
+.treatment-section { background: #080d1a; position: relative; overflow: hidden; }
+.treatment-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: start; }
+.stat-box {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px; padding: 2.5rem; text-align: center; position: sticky; top: 80px;
+}
+.drug-name { font-size: 1.7rem; font-weight: 700; color: #a855f7; margin-bottom: 0.3rem; letter-spacing: -0.02em; }
+.drug-sub { font-size: 0.7rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1.5rem; }
+.stat-box p { font-size: 0.88rem; text-align: left; max-width: none; color: rgba(255,255,255,0.5); }
+.stat-num { font-size: 3.2rem; font-weight: 700; background: linear-gradient(135deg, #e2c9f5, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin: 1.5rem 0 0.2rem; letter-spacing: -0.03em; }
+.stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.3); letter-spacing: 0.04em; }
+
+/* RESOURCES with a twist */
+.resources-section { background: #080d1a; position: relative; overflow: hidden; }
+.resources-twist {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; margin-top: 3rem; max-width: 980px; margin-left: auto; margin-right: auto;
+}
+.resource-twist-card {
+  position: relative; padding: 2rem;
+  border-radius: 20px; overflow: hidden;
+  transition: transform 0.3s;
+}
+.resource-twist-card:hover { transform: translateY(-5px); }
+.resource-twist-card.card-dark { background: #1a1a1a; color: white; }
+.resource-twist-card.card-red { background: #a855f7; color: white; }
+.resource-twist-card.card-light { background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.1); }
+.resource-twist-card.card-outline { background: transparent; border: 1.5px solid #a855f7; }
+.resource-twist-card h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.6rem; }
+.resource-twist-card.card-dark h4,
+.resource-twist-card.card-red h4 { color: white; }
+.resource-twist-card.card-light h4,
+.resource-twist-card.card-outline h4 { color: #fff; }
+.resource-twist-card p { font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.2rem; max-width: none; }
+.resource-twist-card.card-dark p,
+.resource-twist-card.card-red p { color: rgba(255,255,255,0.7); }
+.resource-twist-card.card-light p,
+.resource-twist-card.card-outline p { color: rgba(255,255,255,0.45); }
+.resource-twist-card a {
+  font-size: 0.8rem; font-weight: 600; text-decoration: none;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.resource-twist-card.card-dark a { color: rgba(255,255,255,0.7); }
+.resource-twist-card.card-red a { color: white; }
+.resource-twist-card.card-light a { color: #a855f7; }
+.resource-twist-card.card-outline a { color: #a855f7; }
+.card-cat-bg {
+  position: absolute; right: -10px; bottom: -10px;
+  opacity: 0.07; pointer-events: none;
+}
+.card-cat-bg svg { width: 90px; height: 90px; }
+
+/* DONATE */
+.donate-section { background: linear-gradient(135deg, #1e1b4b, #4a1d96); padding: 110px 2rem; text-align: center; position: relative; overflow: hidden; }
+.donate-section h2 { background: linear-gradient(135deg, #fff 0%, #d8b4fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-left: auto; margin-right: auto; text-align: center; }
+.donate-section p { color: rgba(255,255,255,0.5); text-align: center; margin-left: auto; margin-right: auto; }
+.donate-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+.btn { padding: 0.85rem 1.8rem; border-radius: 980px; text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: transform 0.2s, opacity 0.2s; }
+.btn:hover { transform: scale(1.03); }
+.btn-primary { background: #a855f7; color: white; }
+.btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.15); }
+
+/* MEMORIAL */
+.memorial-section { background: #080d1a; padding: 110px 2rem; position: relative; overflow: hidden; }
+.memorial-inner { max-width: 980px; margin: 0 auto; }
+.memorial-header { text-align: center; margin-bottom: 4rem; }
+.memorial-header h2 { background: linear-gradient(135deg, #1a1a1a 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 4rem; }
+.photo { border-radius: 20px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+.photo img { width: 100%; display: block; object-fit: contain; background: #0f1b3d; }
+.memorial-text { max-width: 640px; margin: 0 auto; text-align: center; }
+.memorial-text p { font-size: 1.05rem; line-height: 1.85; color: rgba(255,255,255,0.55); max-width: none; margin-bottom: 1.4rem; }
+.memorial-paws { font-size: 1.3rem; letter-spacing: 0.5rem; opacity: 0.4; margin-top: 2rem; color: #fff; }
+
+/* FOOTER */
+footer { background: #050a14; padding: 2rem; text-align: center; color: rgba(255,255,255,0.25); font-size: 0.78rem; border-top: 1px solid rgba(255,255,255,0.06); }
+footer span { color: #a855f7; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 768px) {
+  .fip-grid, .treatment-grid, .resources-twist, .photo-grid { grid-template-columns: 1fr; }
+  .type-cards { grid-template-columns: 1fr; }
+  .mindmap-wrapper { height: auto; display: flex; flex-direction: column; gap: 0.8rem; align-items: center; }
+  .mindmap-center { position: static; transform: none; margin-bottom: 1rem; }
+  .mindmap-node { position: static; width: 100%; }
+  .mindmap-lines { display: none; }
+  nav ul { display: none; }
+  .stat-box { position: static; }
+}
+
+/* FLASHCARD */
+.flashcard-section {
+  max-width: 700px; margin: 4rem auto 0;
+}
+.flashcard-container {
+  position: relative; height: 340px;
+}
+.flashcard {
+  position: absolute; inset: 0;
+  background: #0f1b3d;
+  border-radius: 24px;
+  padding: 3rem;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transform: translateX(60px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  box-shadow: 0 20px 60px rgba(15,27,61,0.25);
+}
+.flashcard.active {
+  opacity: 1; pointer-events: all; transform: translateX(0);
+}
+.flashcard.exit-left {
+  opacity: 0; transform: translateX(-60px);
+}
+.flashcard-inner {
+  text-align: center;
+}
+.flashcard-inner svg {
+  width: 36px; height: 36px; margin: 0 auto 1.2rem;
+  display: block;
+  stroke: url(#cardGrad);
+}
+.flashcard-inner h3 {
+  font-size: 1.6rem; font-weight: 700;
+  letter-spacing: -0.02em; margin-bottom: 1rem;
+  background: linear-gradient(135deg, #f0abfc, #93c5fd);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.flashcard-inner p {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.97rem; line-height: 1.75;
+  max-width: 480px; margin: 0 auto;
+}
+.flashcard-controls {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.5rem; margin-top: 1.8rem;
+}
+.fc-btn {
+  background: #0f1b3d; color: white;
+  border: none; width: 44px; height: 44px;
+  border-radius: 50%; font-size: 1.1rem;
+  cursor: pointer; transition: background 0.2s, transform 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.fc-btn:hover { background: #1e3a7a; transform: scale(1.08); }
+.fc-dots { display: flex; gap: 0.5rem; }
+.fc-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #ddd; transition: background 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+.fc-dot.active { background: #a855f7; transform: scale(1.3); }
+.fc-counter {
+  text-align: center; font-size: 0.78rem;
+  color: rgba(255,255,255,0.3); margin-top: 0.8rem; letter-spacing: 0.08em;
+}
+
+
+/* FULL SCREEN FIP FORMS */
+.fip-fullscreen-forms { width: 100%; margin-top: 1rem; }
+.fip-full-panel {
+  position: relative; width: 100%; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.fip-full-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transform: scale(1.05);
+  transition: transform 0.6s ease;
+  filter: brightness(0.4);
+}
+.fip-full-panel:hover .fip-full-bg { transform: scale(1); }
+.fip-full-overlay {
+  position: absolute; inset: 0;
+  background: rgba(8,13,26,0.6);
+}
+.fip-full-content {
+  position: relative; z-index: 2;
+  text-align: center; padding: 2rem;
+  max-width: 700px;
+}
+.fip-full-number {
+  font-size: 5rem; font-weight: 800;
+  letter-spacing: -0.04em; line-height: 1;
+  background: linear-gradient(135deg, rgba(240,171,252,0.3), rgba(147,197,253,0.3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+.fip-full-title {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  font-family: 'Nunito', sans-serif;
+  letter-spacing: -0.01em;
+  margin-bottom: 2rem;
+  background: linear-gradient(180deg, #ffffff 0%, #c8b8e8 30%, #a78bdb 60%, #d4c5f0 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 12px rgba(168,85,247,0.4));
+}
+.fip-reveal-btn {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  color: white; padding: 0.8rem 2.5rem;
+  border-radius: 980px; font-size: 0.88rem;
+  font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  font-family: inherit;
+}
+.fip-reveal-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.6);
+  transform: scale(1.04);
+}
+.fip-full-text {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.6s ease, opacity 0.4s ease;
+  opacity: 0; margin-top: 0;
+}
+.fip-full-text.open {
+  max-height: 400px; opacity: 1; margin-top: 2rem;
+}
+.fip-full-text p {
+  color: rgba(255,255,255,0.8); font-size: 1rem;
+  line-height: 1.75; max-width: none; margin-bottom: 1rem;
+}
+.fip-full-tags {
+  font-size: 0.78rem; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35); text-transform: uppercase;
+}
+
+
+/* LEGO ANALOGY BLOCK */
+.lego-block {
+  margin: 2rem 0;
+  position: relative;
+}
+.lego-quote {
+  background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(59,130,246,0.12));
+  border: 1px solid rgba(168,85,247,0.25);
+  border-left: 4px solid transparent;
+  border-image: linear-gradient(180deg, #f0abfc, #93c5fd) 1;
+  border-radius: 0 16px 16px 0;
+  padding: 2rem 2rem 2rem 1.5rem;
+  position: relative;
+}
+.lego-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+.lego-quote blockquote {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.75);
+  font-style: italic;
+  margin: 0;
+  max-width: none;
+}
+.lego-quote blockquote strong {
+  color: #fff;
+  font-style: normal;
+  background: linear-gradient(135deg, #f0abfc, #93c5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+.sticky-note {
+  background: rgba(255,255,255,0.04);
+  border-left: 3px solid rgba(168,85,247,0.5);
+  border-radius: 8px;
+  padding: 1.4rem 1.8rem;
+  margin: 2rem 0;
+  font-size: 0.97rem;
+  line-height: 1.85;
+  max-width: 600px;
+  color: rgba(255,255,255,0.65);
+  font-style: italic;
+}
+
+
+.chem-structure {
+  text-align: center;
+  opacity: 0.85;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">FIP Awareness</div>
+  <ul>
+    <li><a href="#what-is-fip">What is FIP</a></li>
+    <li><a href="#symptoms">Symptoms</a></li>
+    <li><a href="#treatment">Treatment</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#pebbi">For Pebbi</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Feline Infectious Peritonitis</div>
+  <h1>Learn About <span>FIP.</span></h1>
+  <p class="hero-sub">FIP is one of the most misdiagnosed diseases in cats. Knowing the signs early can be the difference between life and death.</p>
+  <a href="#what-is-fip" class="hero-cta">Learn More</a>
+  <div class="hero-image">
+    <img src="{{ url_for('static', filename='images/pebbi5.jpg') }}" alt="Pebbi sleeping">
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT IS FIP -->
+<section id="what-is-fip" class="fip-section">
+  <div class="section" style="position:relative;">
+    <div class="fip-grid">
+      <div>
+        <div class="section-label reveal">The Disease</div>
+        <h2 class="reveal reveal-delay-1">What is FIP?</h2>
+        <p class="reveal reveal-delay-2">FIP stands for Feline Infectious Peritonitis. It stems from a mutation of the well known virus FECV which stands for Feline Enteric Coronavirus. FECV is a very common and highly contagious virus infecting the intestinal tract in cats. Relatively easy to treat, and detect using biotechnology.</p>
+        <p class="reveal reveal-delay-2">It is an extremely rare virus, and only 5-10% of cats infected with FECV encounter the mutation: A systemic, fatal form of the virus that triggers severe immune-mediated inflammation throughout the body.</p>
+        <p class="reveal reveal-delay-2">It predominantly affects cats from a very early age, typically between 4 months and 2 years, although cats of any age are susceptible to the virus. FIP is notoriously difficult to diagnose because its early symptoms resemble common conditions such as intestinal parasites (worms). FIP is commonly misdiagnosed until the virus has progressed significantly. Luckily, FIP is not contagious.</p>
+      </div>
+      <div>
+        <h3 class="reveal" style="margin-top:0;">Who is at Risk?</h3>
+        <div class="risk-cards reveal reveal-delay-1">
+          <div class="risk-card"><span class="risk-label">Age</span><span class="risk-desc">Kittens and cats between the ages of 4 months and two years are more vulnerable to the disease, but cats of any age are susceptible</span></div>
+          <div class="risk-card"><span class="risk-label">Shelter cats</span><span class="risk-desc">They have a higher exposure to the baseline virus, FECV</span></div>
+          <div class="risk-card"><span class="risk-label">Stress</span><span class="risk-desc">It's possible that neurological factors trigger the mutation</span></div>
+          <div class="risk-card"><span class="risk-label">Genetics</span><span class="risk-desc">Certain breeds are more susceptible with Bengals being most vulnerable</span></div>
+          <div class="risk-card"><span class="risk-label">Immune system</span><span class="risk-desc">A weak immune system can be hard to fight off the virus</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="fip-section" style="padding: 4rem 2rem 0;">
+  <div class="section" style="padding-top:0; padding-bottom:1rem;">
+    <div class="fip-grid">
+      <div>
+        <h2 class="reveal" style="margin-bottom:0.3rem;">Three Main Forms</h2>
+        <p class="reveal" style="font-size:0.95rem; color:rgba(255,255,255,0.45); margin-top:0.3rem; margin-bottom:0;">Click each form to reveal details below!</p>
+      </div>
+      <div></div>
+    </div>
+  </div>
+
+      <!-- FULL SCREEN FIP FORMS -->
+      <div class="fip-fullscreen-forms">
+        <!-- WET FIP -->
+        <div class="fip-full-panel" id="panel-wet">
+          <div class="fip-full-bg" style="background-image: url('{{ url_for('static', filename='images/wetfip.avif') }}')"></div>
+          <div class="fip-full-overlay"></div>
+          <div class="fip-full-content">
+            <div class="fip-full-number">01</div>
+            <h2 class="fip-full-title">Wet FIP</h2>
+            <button class="fip-reveal-btn" onclick="toggleFipPanel('wet')">Reveal</button>
+            <div class="fip-full-text" id="text-wet">
+              <p>Distinguished by fluid accumulation in the abdomen or chest with rapid progression. The most common form of FIP and the easiest to detect due to its main symptom: a bloated or pot-bellied appearance. Often mistaken for intestinal parasites.</p>
+              <div class="fip-full-tags">Bloated belly &middot; Difficulty breathing</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DRY FIP -->
+        <div class="fip-full-panel" id="panel-dry">
+          <div class="fip-full-bg" style="background-image: url('{{ url_for('static', filename='images/dryfip.webp') }}'); filter: hue-rotate(200deg) saturate(0.6) brightness(0.5);"></div>
+          <div class="fip-full-overlay" style="background: linear-gradient(135deg, rgba(59,130,246,0.7), rgba(168,85,247,0.7));"></div>
+          <div class="fip-full-content">
+            <div class="fip-full-number">02</div>
+            <h2 class="fip-full-title">Dry FIP</h2>
+            <button class="fip-reveal-btn" onclick="toggleFipPanel('dry')">Reveal</button>
+            <div class="fip-full-text" id="text-dry">
+              <p>The formation of granulomatous lesions in internal organs makes it significantly harder to detect and diagnose, though it can progress at a slower rate. Affects the brain, eyes, or kidneys.</p>
+              <div class="fip-full-tags">Fluctuating fevers &middot; Cloudy eyes &middot; Seizures (rare)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEUROLOGICAL FIP -->
+        <div class="fip-full-panel" id="panel-neuro">
+          <div class="fip-full-bg" style="background-image: url('{{ url_for('static', filename='images/neuro.jpg') }}')"></div>
+          <div class="fip-full-overlay" style="background: rgba(80,0,30,0.75);"></div>
+          <div class="fip-full-content">
+            <div class="fip-full-number">03</div>
+            <h2 class="fip-full-title">Neurological FIP</h2>
+            <button class="fip-reveal-btn" onclick="toggleFipPanel('neuro')">Reveal</button>
+            <div class="fip-full-text" id="text-neuro">
+              <p>The most fatal and rare form. A severe progression of Dry FIP where the virus reaches the blood-brain barrier, effectively attacking the cat's central nervous system.</p>
+              <div class="fip-full-tags">Paralysis &middot; Unresponsiveness &middot; Seizures</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- SYMPTOMS MIND MAP -->
+<section id="symptoms" class="symptoms-section section-full">
+  <div style="max-width:980px;margin:0 auto;">
+    <div class="section-label reveal">Watch For These</div>
+    <h2 class="reveal reveal-delay-1">Symptoms</h2>
+    <p class="reveal reveal-delay-2" style="max-width:640px;">One of the dangerous aspects of FIP is how closely its symptoms resemble common diseases and illnesses. Lethargy, pot-belly, weight loss, loss of appetite and fever can easily be attributed to intestinal parasites or other minor infections. That explains why the majority of cases are undetectable until the disease is advanced. Note that patterns vary.</p>
+  </div>
+
+  <div class="flashcard-section reveal">
+    <div class="flashcard-container">
+      <div class="flashcard active" data-index="0">
+        <div class="flashcard-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 6v6l4 2"/></svg>
+          <h3>Persistent Fever</h3>
+          <p>Fevers unable to respond to antibiotics is one of the biggest indicators of FIP. Fevers are often undetectable without a thermometer. If your cat's ear is warm to the touch, that indicates a fever!</p>
+        </div>
+      </div>
+      <div class="flashcard" data-index="1">
+        <div class="flashcard-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 6h18M3 12h12M3 18h8"/></svg>
+          <h3>Weight Loss</h3>
+          <p>Gradual weight loss or stunted growth in kittens, even in cats maintaining an appropriate diet. Make sure to weigh your cat often!</p>
+        </div>
+      </div>
+      <div class="flashcard" data-index="2">
+        <div class="flashcard-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M17 7.5C17 10.538 14.761 13 12 13S7 10.538 7 7.5 9.239 2 12 2s5 2.462 5 5.5z"/><path d="M3 22c0-4.418 4.029-8 9-8s9 3.582 9 8"/></svg>
+          <h3>Lethargy</h3>
+          <p>Lethargy is reduction in energy and interest in activity, particularly notable in younger and more playful cats.</p>
+        </div>
+      </div>
+      <div class="flashcard" data-index="3">
+        <div class="flashcard-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><ellipse cx="12" cy="14" rx="8" ry="5"/><path d="M6 11C6 7.686 8.686 5 12 5s6 2.686 6 6"/></svg>
+          <h3>Abdominal Swelling</h3>
+          <p>Visible bloating of the abdomen caused by fluid accumulation, a distinct presentation of wet FIP. Do NOT attempt belly rubs as they cause major discomfort and pain.</p>
+        </div>
+      </div>
+      <div class="flashcard" data-index="4">
+        <div class="flashcard-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          <h3>Pale Gums</h3>
+          <p>Light colored gums indicate anemia and require immediate veterinary attention. Check your cat's gums! Even though they will hate it.</p>
+        </div>
+      </div>
+      <div class="flashcard" data-index="5">
+        <div class="flashcard-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/><path d="M3 12h2M19 12h2M12 3v2M12 19v2"/></svg>
+          <h3>Ocular Changes</h3>
+          <p>Cloudiness, change in color, frequent dilation of pupils or inflammation in the eyes may indicate Dry FIP affecting the central nervous system.</p>
+        </div>
+      </div>
+      <div class="flashcard" data-index="6">
+        <div class="flashcard-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="currentColor"/><circle cx="12" cy="12" r="10"/></svg>
+          <h3>Neurological Signs</h3>
+          <p>Seizures, wobbling, sudden behavioral changes (that can progress into depression), and in rare cases, paralysis can occur when FIP involves the brain or spinal cord. If your cat is experiencing paralysis, they are in need of emergency care.</p>
+        </div>
+      </div>
+      <div class="flashcard" data-index="7">
+        <div class="flashcard-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/></svg>
+          <h3>Loss of Appetite</h3>
+          <p>Sustained reduction in desire to eat in combination with other symptoms is a significant clinical warning sign.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard-controls">
+      <button class="fc-btn fc-prev" onclick="changeCard(-1)">&#8592;</button>
+      <div class="fc-dots" id="fcDots"></div>
+      <button class="fc-btn fc-next" onclick="changeCard(1)">&#8594;</button>
+    </div>
+    <div class="fc-counter" id="fcCounter">1 / 8</div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- TREATMENT -->
+<section id="treatment" class="treatment-section">
+  <div class="section" style="position:relative;">
+    <div class="treatment-grid">
+      <div>
+        <h2 class="reveal reveal-delay-1">Treatment: GS-441524</h2>
+        <p class="reveal reveal-delay-2">For decades, FIP was considered uniformly fatal. In early 2018, UC Davis researcher Dr. Niels Pedersen proved <strong>GS-441524</strong> to be an effective antiviral medication against FIP. The drug was initially synthesised by Gilead Sciences Inc. as a potential treatment for widely known human RNA viruses such as Ebola and SARS in 2012.</p>
+        <h3 class="reveal">Mechanism of Action</h3>
+        <p class="reveal reveal-delay-1">Nucleosides are the building blocks for DNA and RNA. A nucleoside analogue is a synthetic, lab-made nucleoside designed to look and function like a natural nucleoside. GS-441524 is a nucleoside analogue that inhibits viral RNA replication. Its slightly altered structure allows it to disrupt or prevent rapid viral replication.</p>
+        <div class="sticky-note reveal reveal-delay-1">
+          In a different analogy for those with little to no knowledge on biology, let's think of it as LEGO. You're building a set but for some reason the piece you need to continue is faulty. You try to use it anyway, but it doesn't fit properly and it prevents the rest of the model from being built correctly. In a similar way, GS-441524 is that faulty building block that interferes with the virus's ability to make accurate copies of itself once it's incorporated into the virus's RNA (the LEGO model in this case).
+        </div>
+        <h3 class="reveal">Treatment Protoccol</h3>
+        <p class="reveal reveal-delay-1">Treatment consists of daily antiviral administration either via oral formulation (pills or liquid medication) or injection for a minimum of 12 weeks (84 days). The duration of treatment generally varies based on type of FIP, severity, and the cat's clinical response.</p>
+        <h3 class="reveal">Financial Considerations</h3>
+        <p class="reveal reveal-delay-1">Thankfully, treatment costs generally depend on the cat's weight, type of FIP, and treatment duration. Financial assistance is available through organizations. See the resource section below!</p>
+      </div>
+      <div>
+        <div class="stat-box reveal reveal-delay-2">
+          <div class="drug-name">GS-441524</div>
+          <div class="drug-sub">Treatment for FIP</div>
+          <p>A drug that changed the perspective of FIP. What was once considered fatal, to being curable in most cases.</p>
+          <div class="stat-num">~85%</div>
+          <div class="stat-label">success rate in treated cats</div>
+          <div class="stat-num">12</div>
+          <div class="stat-label">weeks minimum treatment</div>
+          <div class="stat-num">2022</div>
+          <div class="stat-label">FDA breakthrough therapy designation</div>
+        </div>
+        <div class="chem-structure reveal reveal-delay-3">
+          <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;margin-top:2rem;">
+            <g stroke="rgba(192,132,252,0.7)" stroke-width="1.5" fill="none" font-family="monospace" font-size="10" fill-opacity="1">
+              <!-- Adenine base -->
+              <line x1="170" y1="100" x2="150" y2="83"/>
+              <line x1="150" y1="83" x2="128" y2="90"/>
+              <line x1="128" y1="90" x2="125" y2="112"/>
+              <line x1="125" y1="112" x2="145" y2="125"/>
+              <line x1="145" y1="125" x2="170" y2="100"/>
+              <!-- Purine ring fusion -->
+              <line x1="150" y1="83" x2="160" y2="65"/>
+              <line x1="160" y1="65" x2="182" y2="62"/>
+              <line x1="182" y1="62" x2="192" y2="78"/>
+              <line x1="192" y1="78" x2="170" y2="100"/>
+              <!-- NH2 group -->
+              <line x1="128" y1="90" x2="112" y2="78"/>
+              <text x="96" y="78" fill="rgba(192,132,252,0.9)" stroke="none">NH2</text>
+              <!-- N atoms -->
+              <text x="118" y="116" fill="rgba(147,197,253,0.9)" stroke="none">N</text>
+              <text x="156" y="132" fill="rgba(147,197,253,0.9)" stroke="none">N</text>
+              <text x="183" y="82" fill="rgba(147,197,253,0.9)" stroke="none">N</text>
+              <text x="157" y="60" fill="rgba(147,197,253,0.9)" stroke="none">N</text>
+              <!-- Sugar connection -->
+              <line x1="145" y1="125" x2="145" y2="148"/>
+              <line x1="145" y1="148" x2="162" y2="162"/>
+              <line x1="162" y1="162" x2="182" y2="155"/>
+              <line x1="182" y1="155" x2="185" y2="135"/>
+              <line x1="185" y1="135" x2="170" y2="100"/>
+              <!-- OH groups -->
+              <line x1="162" y1="162" x2="158" y2="178"/>
+              <text x="148" y="188" fill="rgba(192,132,252,0.9)" stroke="none">OH</text>
+              <line x1="182" y1="155" x2="198" y2="168"/>
+              <text x="198" y="178" fill="rgba(192,132,252,0.9)" stroke="none">OH</text>
+              <!-- Vinyl group (GS-441524 specific) -->
+              <line x1="185" y1="135" x2="210" y2="128"/>
+              <line x1="210" y1="128" x2="228" y2="138"/>
+              <line x1="210" y1="128" x2="214" y2="112"/>
+              <text x="228" y="135" fill="rgba(240,171,252,0.9)" stroke="none">CN</text>
+              <text x="208" y="108" fill="rgba(147,197,253,0.9)" stroke="none">=CH2</text>
+              <!-- Label -->
+              <text x="20" y="185" fill="rgba(255,255,255,0.25)" stroke="none" font-size="9">GS-441524 (C12H13N5O4)</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RESOURCES -->
+<section id="resources" class="resources-section section-full">
+  <div style="max-width:980px;margin:0 auto;">
+    <h2 class="reveal">Resources & Support</h2>
+    <p class="reveal reveal-delay-1">If your cat was just diagnosed, or you are trying to learn more, these are good places to start.</p>
+  </div>
+  <div class="resources-twist">
+    <div class="resource-twist-card card-dark reveal">
+      <div class="card-cat-bg"><svg viewBox="0 0 100 100" fill="white"><path d="M30 70 C20 70 10 60 10 50 C10 35 20 25 30 20 L25 5 L38 18 C42 17 46 16 50 16 C54 16 58 17 62 18 L75 5 L70 20 C80 25 90 35 90 50 C90 60 80 70 70 70 C65 75 58 78 50 78 C42 78 35 75 30 70Z"/></svg></div>
+      <h4>UC Davis FIP Research</h4>
+      <p>The university contributed to a lot of the research on GS-441524. A good source if you want to learn more about the clinical side.</p>
+      <a href="https://www.vetmed.ucdavis.edu" target="_blank">Visit Site</a>
+    </div>
+    <div class="resource-twist-card card-red reveal reveal-delay-1">
+      <div class="card-cat-bg"><svg viewBox="0 0 100 100" fill="white"><path d="M30 70 C20 70 10 60 10 50 C10 35 20 25 30 20 L25 5 L38 18 C42 17 46 16 50 16 C54 16 58 17 62 18 L75 5 L70 20 C80 25 90 35 90 50 C90 60 80 70 70 70 C65 75 58 78 50 78 C42 78 35 75 30 70Z"/></svg></div>
+      <h4>Bria Fund</h4>
+      <p>A nonprofit organization that helps cover treatment costs for cat owners who cannot afford it. Apply if the cost of treatment is a concern.</p>
+      <a href="https://www.briafund.org" target="_blank">Apply for Help</a>
+    </div>
+    <div class="resource-twist-card card-outline reveal reveal-delay-2" style="grid-column: 1 / -1; max-width: 480px;">
+      <div class="card-cat-bg"><svg viewBox="0 0 100 100" fill="#1a1a1a"><path d="M30 70 C20 70 10 60 10 50 C10 35 20 25 30 20 L25 5 L38 18 C42 17 46 16 50 16 C54 16 58 17 62 18 L75 5 L70 20 C80 25 90 35 90 50 C90 60 80 70 70 70 C65 75 58 78 50 78 C42 78 35 75 30 70Z"/></svg></div>
+      <h4>FIP Warriors Treatment Guide</h4>
+      <p>A step-by-step guide to treatment. How to source the medication, information on dosage, what to watch for, etc.</p>
+      <a href="https://www.fipwarriors.eu" target="_blank">Read Guide</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DONATE -->
+<section class="donate-section">
+  <h2 class="reveal reveal-delay-1">Help Other Cats</h2>
+  <p class="reveal reveal-delay-2">Donating goes toward research and helps families who cannot afford treatment on their own.</p>
+  <div class="donate-btns reveal reveal-delay-3">
+    <a href="https://www.briafund.org/donate" target="_blank" class="btn btn-primary">Donate to the Bria Fund</a>
+    <a href="https://www.vetmed.ucdavis.edu/giving" target="_blank" class="btn btn-secondary">Support UC Davis FIP Research</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MEMORIAL -->
+<section id="pebbi" class="memorial-section">
+  <div class="memorial-inner">
+    <div class="memorial-header">
+      <h2 class="reveal reveal-delay-1">For Pebbi 🐾</h2>
+    </div>
+    <div class="photo-grid">
+      <div class="photo reveal">
+        <img src="{{ url_for('static', filename='images/pebbi4.png') }}" alt="Pebbi in the laundry basket with her octopus toy">
+      </div>
+      <div class="photo reveal reveal-delay-1">
+        <img src="{{ url_for('static', filename='images/pebbi3.jpeg') }}" alt="Strawberry hat crocheted for Pebbi">
+      </div>
+    </div>
+    <div class="memorial-text">
+            <p class="reveal">This is my cat Pebbi, who passed away at 6 months due to the virus.</p>
+      <p class="reveal reveal-delay-1">Pebbi's FIP was initially mistaken for intestinal worms. I was told that her bloated belly was a cause of intestinal worms, and was given treatment. By the time she developed pale gums, it signaled that it was more than just intestinal worms, and was diagnosed with WET FIP. Within 10 hours of her diagnosis, her WET FIP progressed into NEUROLOGICAL FIP, where Pebbi lost all movement in her limbs and spontaneously passed away by the time we reached the emergency veterinarian.</p>
+      <p class="reveal reveal-delay-2">She was well bonded with my two dogs Brownie and Tori, turned into a loaf beside me everywhere I went around the house, and inhaled Churu treats within 20 seconds. She also hated this strawberry hat I crocheted for her, one I never even got to take a photo of her wearing since she dodged the hat every time I tried to get her to keep composure haha!</p>
+      <p class="reveal reveal-delay-3">I coded this portfolio website using Python. I avoided any use of AI such as Claude and ChatGPT as if I was back in early high school making a Google slideshow about "environmental issues in society" for a science project.</p>
+      <p class="reveal reveal-delay-3">FIP isn't talked about or researched on enough. If this page helps at least one cat's diagnosis, that is in Pebbi's legacy!</p>
+      <div class="memorial-paws reveal reveal-delay-3">🐾 🐾 🐾</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Made with love in memory of <span>Pebbi</span> &nbsp;&middot;&nbsp; FIP Awareness &nbsp;&middot;&nbsp; Always consult a veterinarian for medical advice</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Floating paw prints
+const pawContainer = document.createElement('div');
+pawContainer.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;';
+document.body.appendChild(pawContainer);
+const cols = 4; const rows = 4;
+for (let i = 0; i < cols * rows; i++) {
+  const paw = document.createElement('div');
+  const size = 24 + Math.random() * 18;
+  const col = i % cols;
+  const row = Math.floor(i / cols);
+  const leftPct = (col / cols) * 100 + (Math.random() * 12 - 6);
+  const topPct = (row / rows) * 100 + (Math.random() * 10 - 5);
+  paw.innerHTML = `<svg viewBox="0 0 100 100" width="${size}" height="${size}" fill="rgba(168,85,247,0.1)">
+    <ellipse cx="50" cy="68" rx="24" ry="20"/>
+    <ellipse cx="20" cy="48" rx="10" ry="13" transform="rotate(-20 20 48)"/>
+    <ellipse cx="80" cy="48" rx="10" ry="13" transform="rotate(20 80 48)"/>
+    <ellipse cx="34" cy="28" rx="9" ry="11" transform="rotate(-10 34 28)"/>
+    <ellipse cx="66" cy="28" rx="9" ry="11" transform="rotate(10 66 28)"/>
+  </svg>`;
+  paw.style.cssText = `position:absolute;left:${leftPct}%;top:${topPct}%;animation:floatPaw ${20+Math.random()*15}s ${Math.random()*20}s linear infinite;`;
+  pawContainer.appendChild(paw);
+}
+</script>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0abfc"/>
+      <stop offset="100%" style="stop-color:#93c5fd"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<script>
+let current = 0;
+const cards = document.querySelectorAll('.flashcard');
+const total = cards.length;
+const dotsEl = document.getElementById('fcDots');
+const counterEl = document.getElementById('fcCounter');
+
+// build dots
+cards.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'fc-dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function goTo(idx) {
+  cards[current].classList.remove('active');
+  cards[current].classList.add('exit-left');
+  setTimeout(() => cards[current].classList.remove('exit-left'), 400);
+  current = (idx + total) % total;
+  cards[current].classList.add('active');
+  document.querySelectorAll('.fc-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  counterEl.textContent = (current + 1) + ' / ' + total;
+}
+
+function changeCard(dir) { goTo(current + dir); }
+</script>
+
+
+<script>
+function toggleFipPanel(id) {
+  const text = document.getElementById('text-' + id);
+  const btn = document.querySelector('#panel-' + id + ' .fip-reveal-btn');
+  const isOpen = text.classList.contains('open');
+  text.classList.toggle('open');
+  btn.textContent = isOpen ? 'Reveal' : 'Hide';
+}
+</script>
+
+</body>
+</html>
